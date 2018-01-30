@@ -66,20 +66,33 @@ def is_palindrome(phrase):
             return False
 
 def decimal_to_binary(n):
-    print('decimal_to_binary(' + str(n) +')')
-    if n < 2:
-        print(n)
+    if n < 0:
+        return None
+    return decimal_to_binary_helper(n, [])
+
+
+def decimal_to_binary_helper(n, digits):
+    if n == 0 or n == 1:
+        digits.append(n)
     else:
         last_digit = n % 2
         rest_of_digit = n // 2
-        decimal_to_binary(rest_of_digit)
-        print(last_digit)
+        decimal_to_binary_helper(rest_of_digit, digits)
+        digits.append(last_digit)
+    return digits
+
+def count_ones(n):
+    count = 0
+    while n > 0:
+        count += n & 1
+        n >>= 1
+    return count
 
 
 if __name__ == "__main__":
     #countdown(10)
     #print(factorial(4))
-    print(fibonacci(5))
+    #print(fibonacci(5))
     #print(power(3, 5))
     #print(is_palindrome('RacecaR'))
-    #print(decimal_to_binary(12))
+    print(count_ones(15))
