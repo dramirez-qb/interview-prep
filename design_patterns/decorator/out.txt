@@ -1,0 +1,4 @@
+a plain line
+A line with checksum
+2018-02-27 09:47:24 -0700: with time stamp
+1: with line number
