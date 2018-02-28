@@ -1,0 +1,11 @@
+Backup.new do |b|
+  b.backup '/home/russ/oldies', name('*.mp3') | name('*.wav')
+  b.to '/tmp/backup'
+  b.interval 60
+end
+
+Backup.new do |b|
+  b.backup '/home/russ/newies', name('*.mp3') | name('*.wav')
+  b.to '/tmp/backup'
+  b.interval 60
+end
