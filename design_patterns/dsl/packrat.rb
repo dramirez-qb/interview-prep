@@ -1,15 +1,25 @@
-require_relative '../interpreter/parser'
+require_relative 'singleton'
 
-def backup(dir, find_expression=All.new)
-  puts "Backup called, source dir=#{dir} find expr=#{find_expression}"
-end
+class PackRat
+  include Singleton
 
-def to(backup_directory)
-  puts "To called, backup dir=#{backup_directory}"
-end
+  def initialize
+    @backups = []
+  end
 
-def interval(minutes)
-  puts "Interval called, interval = #{minutes} minutes"
+  def register_backup(backup)
+    @backups << backup
+  end
+
+  def run
+    threads = []
+    @backups.each do |backup|
+      threads << Thread.new { backup.run }
+    end
+
+    threads.each { |t| t.join }
+  end
 end
 
 eval(File.read('./backup.pr'))
+Backup.instance.run

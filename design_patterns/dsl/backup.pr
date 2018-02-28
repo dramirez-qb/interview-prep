@@ -1,9 +1,20 @@
+#
+# Back up guajardo's documents
+#
 backup '/home/guajardo/documents'
 
-backup '/home/guajardo/music', name('*mp3') & name('*.wav')
+#
+# Expression for finding music files
+#
+music_files = name('*mp3') | name('*.wav')
+
+#
+# Back up two music directories
+#
+backup '/home/guajardo/music', music_files
 
 backup '/home/guajardo/images', except(name('*.tmp'))
 
-to '/external_drive/backups'
+to '/tmp/backup'
 
 interval 60
