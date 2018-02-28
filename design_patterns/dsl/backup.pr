@@ -1,0 +1,9 @@
+backup '/home/guajardo/documents'
+
+backup '/home/guajardo/music', name('*mp3') & name('*.wav')
+
+backup '/home/guajardo/images', except(name('*.tmp'))
+
+to '/external_drive/backups'
+
+interval 60

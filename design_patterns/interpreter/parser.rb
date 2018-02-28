@@ -1,10 +1,11 @@
+require_relative 'expression'
 require_relative 'all'
-require_relative 'writable'
-require_relative 'bigger'
 require_relative 'filename'
+require_relative 'bigger'
+require_relative 'writable'
 require_relative 'not'
-require_relative 'and'
 require_relative 'or'
+require_relative 'and'
 
 class Parser
 	def initialize(text)
