@@ -1,4 +1,10 @@
 def compress_string(s):
+    '''
+    Reduce a string by adding the number of repeating ocurrences from each character.
+    "aaabbc" -> "a3b2c"
+    If length of new string is greater than original string, return original string.
+    '''
+
     if s is None:
         return None
 

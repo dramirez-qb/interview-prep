@@ -1,4 +1,12 @@
 def fizz_buzz(x):
+    '''
+    Print numbers from 1 to x.
+    If a number is divisible by 3 print "Fizz"
+    If a number is divisible by 5 print "Buzz"
+    If a number is divisible by both 3 and 5 print "FizzBuzz"
+    Else print the original number.
+    '''
+
     if x < 1:
         return 'Value must be greater than 1'
 

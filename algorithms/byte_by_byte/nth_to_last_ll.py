@@ -4,6 +4,10 @@ sys.path.append('/Users/guajardo/Documents/Tech Interviews/interview_prep/data_s
 from linkedlist import LinkedList
 
 def nth_to_last(head, n):
+    '''
+    Given a linked list, return the nth-to-last element from the list.
+    '''
+
     if head is None or n < 0:
         return None
 
