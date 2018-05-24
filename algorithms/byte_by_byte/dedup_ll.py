@@ -13,6 +13,7 @@ def delete_dups(head):
 
     dups = set()
     curr = head
+
     while curr:
         if curr.data in dups:
             prev.next = curr.next

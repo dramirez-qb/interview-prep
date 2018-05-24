@@ -1,98 +1,128 @@
-print('recursion examples')
+def fact(n):
+    '''
+    Compute the factorial for n
+    5!
+    5 * 4 * 3 * 2 * 1 * 0
+    '''
 
-def countdown(n):
-    try:
-        if n < 1:
-            raise ValueError
-
-        print(n)
-        if n > 1:
-            countdown(n-1)
-    except ValueError:
-        print('Only positive integers')
-
-def factorial(n):
-    try:
-        if n < 1:
-            raise ValueError
-
-        if n == 1:
-            return 1
-        else:
-            return n * factorial(n-1)
-    except ValueError:
-        print('Only positive integers')
-
-def fibonacci(n):
-    try:
-        if n < 0:
-            raise ValueError
-        memo = [None] * (n + 1)
-        return fibonacci_helper(n, memo)
-    except ValueError:
-        print('Only positive integers')
-
-def fibonacci_helper(n, memo):
-    print('fibonacci_helper(' + str(n) + ')')
-    if n == 0 or n == 1:
-        return n
-    if memo[n] is None:
-        memo[n] = fibonacci_helper(n - 1, memo) + fibonacci_helper(n - 2, memo)
-    return memo[n]
+    if n < 0:
+        raise ValueError('negative not allowed')
+    elif n == 0:
+        return 1
+    else:
+        return n * fact(n - 1)
 
 def power(base, exp):
-    try:
-        if exp < 0:
-            raise ValueError
+    '''
+    Compute the base to the exp power
+    2^3
+    2 * 2 * 2
+    '''
 
-        if exp == 0:
-            return 1
-        else:
-            return base * power(base, exp - 1)
-    except ValueError:
-        print('Only positive exponents')
+    if exp < 0:
+        raise ValueError('negative exponent not allowed')
+    elif exp == 0:
+        return 1
+    elif exp % 2 == 0:
+        return power(base * base, exp // 2)
+    else:
+        return base * power(base, exp - 1)
 
+def is_palindrome(s):
+    '''
+    Determine if the given string is a palindrome.
+    '''
 
-def is_palindrome(phrase):
-    phrase = phrase.lower()
-    if len(phrase) <= 1:
+    s = s.lower()
+    return is_palindrome_helper(s)
+
+def is_palindrome_helper(s):
+    if len(s) <= 1:
         return True
     else:
-        first_char = phrase[0]
-        last_char = phrase[len(phrase) - 1]
-        if first_char == last_char:
-            return is_palindrome(phrase[1:len(phrase) - 1])
-        else:
-            return False
+        first = s[0]
+        last = s[-1]
+        if first == last:
+            middle = s[1:-1]
+            return is_palindrome_helper(middle)
+    return False
 
-def decimal_to_binary(n):
+def print_binary(n):
+    '''
+    Print the binary representation of a number
+    '''
     if n < 0:
-        return None
-    return decimal_to_binary_helper(n, [])
-
-
-def decimal_to_binary_helper(n, digits):
-    if n == 0 or n == 1:
-        digits.append(n)
+        print('-', end='')
+        print_binary(-n)
+    elif n <= 1:
+        print(n, end='')
     else:
         last_digit = n % 2
         rest_of_digit = n // 2
-        decimal_to_binary_helper(rest_of_digit, digits)
-        digits.append(last_digit)
-    return digits
+        print_binary(rest_of_digit)
+        print_binary(last_digit)
 
-def count_ones(n):
-    count = 0
-    while n > 0:
-        count += n & 1
-        n >>= 1
-    return count
+def fib(n):
+    '''
+    Compute the nth fibonacci number
+    '''
 
+    cache = {}
+    return fib_helper(n, cache)
 
-if __name__ == "__main__":
-    #countdown(10)
-    #print(factorial(4))
-    #print(fibonacci(5))
-    #print(power(3, 5))
-    #print(is_palindrome('RacecaR'))
-    print(count_ones(15))
+def fib_helper(n, cache):
+    if n < 1:
+        raise ValueError('negative not allowed')
+    elif n <= 2:
+        return 1
+    elif n in cache:
+        return cache.get(n)
+    else:
+        result = fib(n - 1) + fib(n - 2)
+        cache[n] = result
+        return result
+
+def evaluate(exp):
+    '''
+    Evaluate the expression in the string
+    (1 + ((2 * 3) + 4))
+    11
+    '''
+
+    index = 0
+    return eval_helper(exp, index)
+
+def eval_helper(exp, index):
+    print(f'eval_helper({exp}, {index})')
+    if exp[index].isdigit():
+        result = int(exp[index])
+        print(f'base result {result}')
+        index += 1
+        return result
+    else:
+        index += 1 # skip (
+        left = eval_helper(exp, index) # operand
+        op = exp[index] # operator
+        index += 1
+        right = eval_helper(exp, index) # operand
+        index += 1 # skip )
+
+        if op == '+':
+            result = left + right
+        else:
+            result = left * right
+        print(f'recur result {result}')
+        return result
+
+if __name__ == '__main__':
+    #n = int(input().strip())
+    #base = int(input().strip())
+    #exp = int(input().strip())
+    #s = input().strip()
+    exp = '((1+3)*(2*(4+1)))'
+    #print(fact(n))
+    #print(power(base, exp))
+    #print(is_palindrome(s))
+    #print_binary(n)
+    #print(fib(n))
+    print(evaluate(exp))
